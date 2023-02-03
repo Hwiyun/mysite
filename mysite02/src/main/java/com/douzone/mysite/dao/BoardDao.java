@@ -118,6 +118,106 @@ public class BoardDao {
 
 		return result;
 	}
+	
+	public int totalCount() {
+		BoardVo result = new BoardVo();
+		
+		int count = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select count(*)"
+					+ " from board";
+			pstmt = conn.prepareStatement(sql);
+			
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count=rs.getInt(1);
+				
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+			System.out.println(count);
+		return count;
+	}
+	
+	public List<BoardVo> findPageByNo(int pageNo) {
+		List<BoardVo> result = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = "select b.no, b.title, u.name, b.hit, b.reg_date"
+					+ " from board b"
+					+ " join user u on u.no = b.user_no"
+					+ " order by b.g_no desc , b.o_no asc"
+					+ " limit ?, 5";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, 5*(pageNo-1));
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = new BoardVo();
+				vo.setNo(rs.getLong(1));
+				vo.setTitle(rs.getString(2));
+				vo.setName(rs.getString(3));
+				vo.setHit(rs.getInt(4));
+				vo.setRegDate(rs.getString(5));
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 
 	public void insert(BoardVo vo) {
 		Connection conn = null;
@@ -230,7 +330,6 @@ public class BoardDao {
 
 
 	public BoardVo view(String no) {
-		List<BoardVo> result = new ArrayList<>();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;

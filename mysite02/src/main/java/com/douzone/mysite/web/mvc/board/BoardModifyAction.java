@@ -26,6 +26,10 @@ public class BoardModifyAction implements Action {
 		vo.setNo(no);
 		vo.setTitle(title);
 		vo.setContents(contents);
+		
+		
+		
+		
 		new BoardDao().modify(vo);
 		
 		MvcUtil.redirect(request.getContextPath()+"/board", request, response);
