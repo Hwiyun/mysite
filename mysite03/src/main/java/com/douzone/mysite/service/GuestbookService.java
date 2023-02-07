@@ -13,6 +13,7 @@ public class GuestbookService {
 
 	@Autowired
 	private GuestbookRepository guestbookRepository;
+	
 	public List<GuestbookVo> getMessageList() {
 		return guestbookRepository.findAll();
 	}

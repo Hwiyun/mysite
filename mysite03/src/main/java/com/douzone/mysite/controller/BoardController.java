@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
@@ -40,12 +41,14 @@ public class BoardController {
 		
 	}
 	
+	@Auth
 	@RequestMapping(value =  "/write", method=RequestMethod.GET )
 	public String write() {
 		
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value =  "/write", method=RequestMethod.POST )
 	public String write(Model model, BoardVo vo, HttpSession session) {
 		
@@ -82,6 +85,7 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/modify", method=RequestMethod.GET)
 	public String update(Long no, Model model) {
 		BoardVo vo = boardService.getContents(no);
@@ -91,12 +95,14 @@ public class BoardController {
 		
 	}
 	
+	@Auth
 	@RequestMapping(value = "/modify", method=RequestMethod.POST)
 	public String update(BoardVo vo) {
 		boardService.updateContents(vo);
 		return "redirect:/board/";
 	}
 	
+	@Auth
 	@RequestMapping("/delete")
 	public String delete(BoardVo vo) {
 		boardService.deleteContents(vo);
