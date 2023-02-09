@@ -55,27 +55,27 @@ public class UserController {
 		return "user/login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpSession session, UserVo vo, Model model) {
-		UserVo authUser = userService.getUser(vo);
-
-		if (authUser == null) {
-			model.addAttribute("email", vo.getEmail());
-			return "user/login";
-		}
-
-		session.setAttribute("authUser", authUser);
-
-		return "redirect:/";
-	}
-
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		session.invalidate();
-
-		return "redirect:/";
-	}
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public String login(HttpSession session, UserVo vo, Model model) {
+//		UserVo authUser = userService.getUser(vo);
+//
+//		if (authUser == null) {
+//			model.addAttribute("email", vo.getEmail());
+//			return "user/login";
+//		}
+//
+//		session.setAttribute("authUser", authUser);
+//
+//		return "redirect:/";
+//	}
+//
+//	@RequestMapping("/logout")
+//	public String logout(HttpSession session) {
+//		session.removeAttribute("authUser");
+//		session.invalidate();
+//
+//		return "redirect:/";
+//	}
 	
 
 	@Auth

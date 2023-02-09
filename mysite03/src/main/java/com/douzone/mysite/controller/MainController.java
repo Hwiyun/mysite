@@ -28,6 +28,7 @@ public class MainController {
 	public String message01() {
 		return "Hello World";
 	}
+	
 	@ResponseBody
 	@RequestMapping("/msg02")
 	public String message02(String name) {

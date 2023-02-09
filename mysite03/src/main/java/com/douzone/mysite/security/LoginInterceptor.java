@@ -12,7 +12,7 @@ import com.douzone.mysite.vo.UserVo;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	@Autowired
-	private UserService userservice;
+	private UserService userService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,12 +24,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 		vo.setEmail(email);
 		vo.setPassword(password);
 		
-		UserVo authUser = new UserService().getUser(vo);
-
-		if (authUser == null) {
+		UserVo authUser = userService.getUser(vo);
+		
+		if(authUser == null) {
 			request.setAttribute("email", vo.getEmail());
 			request
-				.getRequestDispatcher("WEB-INF/views/user/login.jsp")
+				.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
 				.forward(request, response);
 			return false;
 		}
@@ -37,10 +37,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
 		System.out.println(authUser);
-
+		
 		response.sendRedirect(request.getContextPath());
+		
 		return false;
-
 	}
 
 }
