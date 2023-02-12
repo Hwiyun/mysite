@@ -1,10 +1,5 @@
 package com.douzone.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
 public class BoardRepository {
@@ -26,7 +20,7 @@ public class BoardRepository {
 		map.put("startOffset", (page-1)*size);
 		map.put("keyword", keyword);
 		map.put("size", size);
-		return sqlSession.selectList("board.findAllByPageAndKeyWord");
+		return sqlSession.selectList("board.findAllByPageAndKeyWord", map);
 	}
 	
 	public void insert(BoardVo vo) {
