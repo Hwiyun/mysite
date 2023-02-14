@@ -175,7 +175,7 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			String sql = "select b.no, b.title, u.name, b.hit, b.reg_date"
+			String sql = "select b.no, b.title, u.name, b.hit, b.reg_date, b.g_no, b.o_no, b.depth, b.user_no"
 					+ " from board b"
 					+ " join user u on u.no = b.user_no"
 					+ " order by b.g_no desc , b.o_no asc"
@@ -193,6 +193,10 @@ public class BoardDao {
 				vo.setName(rs.getString(3));
 				vo.setHit(rs.getInt(4));
 				vo.setRegDate(rs.getString(5));
+				vo.setgNo(rs.getInt(6));
+				vo.setoNo(rs.getInt(7));
+				vo.setDepth(rs.getInt(8));
+				vo.setUserNo(rs.getLong(9));
 				result.add(vo);
 			}
 

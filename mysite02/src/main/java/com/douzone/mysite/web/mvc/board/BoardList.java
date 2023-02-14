@@ -42,8 +42,10 @@ public class BoardList implements Action {
 		} else {
 			maxPage = dao.totalCount()/5 + 1;
 		}
-		
 		List<BoardVo> result = new BoardDao().findPageByNo(pageNo);
+		for(BoardVo vo: result) {
+			System.out.println(vo);
+		}
 		
 		request.setAttribute("list", result);
 		request.setAttribute("beginPage", beginPage);
