@@ -45,5 +45,7 @@ public class GuestbookController {
 		return "redirect:/guestbook/";
 	}
 	
-	
+	public String indexSPA() {
+		return "guestbook/index-spa";
+	}
 }
