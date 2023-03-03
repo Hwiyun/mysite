@@ -26,7 +26,16 @@ public class GuestbookService {
 		return 1 == guestbookRepository.deleteByNoAndPassword(no, password);
 	}
 	
+	public void insertMessage(GuestbookVo vo) {
+		guestbookRepository.insert(vo);
+	}
+
 	public void addMessage(GuestbookVo vo) {
 		guestbookRepository.insert(vo);
+		
+	}
+
+	public List<GuestbookVo> getMessageList(Long no) {
+		return guestbookRepository.findAll(no);
 	}
 }

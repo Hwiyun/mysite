@@ -23,21 +23,23 @@ public class GlobalExceptionHandler {
 			
 	@ExceptionHandler(Exception.class)
 	public void handlerException(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Exception e) throws Exception {
+		HttpServletRequest request,
+		HttpServletResponse response,
+		Exception e) throws Exception {
+		
 		//1. 로깅(Logging)
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		logger.error(errors.toString());
 		
 		//2. 요청 구분
-		// json 요청: request header의 Accept에 application/json(o)
-		// html 요청: request header의 Accept에 application/json(x)
+		//  json 요청: request header의 Accept에 application/json(o)
+		//  html 요청: request header의 Accept에 application/json(x)
 		String accept = request.getHeader("accept");
 		if(accept.matches(".*application/json.*")) {
 			//3. json 응답
 			JsonResult jsonResult = JsonResult.fail(errors.toString());
+			
 			String jsonString = new ObjectMapper().writeValueAsString(jsonResult);
 			
 			response.setStatus(HttpServletResponse.SC_OK);
@@ -46,11 +48,11 @@ public class GlobalExceptionHandler {
 			os.write(jsonString.getBytes("utf-8"));
 			os.close();
 		} else {
-			
 			//3. 사과페이지(정상종료)
 			request.setAttribute("exception", errors.toString());
-			request.getRequestDispatcher("/WEB-INF/views/error/exception.jsp").forward(request, response);
+			request
+				.getRequestDispatcher("/WEB-INF/views/error/exception.jsp")
+				.forward(request, response);
 		}
-		
 	}
 }

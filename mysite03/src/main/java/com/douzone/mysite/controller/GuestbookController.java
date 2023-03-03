@@ -24,12 +24,12 @@ public class GuestbookController {
 	public String list(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
 		model.addAttribute("list", list);
-		return "guestbook/list";
+		return "guestbook/index";
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public String join(GuestbookVo vo) {
-		guestbookService.addMessage(vo);
+	public String insert(GuestbookVo vo) {
+		guestbookService.insertMessage(vo);
 		return "redirect:/guestbook/";
 	}
 	
@@ -45,7 +45,10 @@ public class GuestbookController {
 		return "redirect:/guestbook/";
 	}
 	
+	@RequestMapping(value="/spa", method=RequestMethod.GET)
 	public String indexSPA() {
+		
 		return "guestbook/index-spa";
-	}
+	}	
+	
 }
